@@ -8,7 +8,7 @@ import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.eddiej.searchbeers.databinding.LayoutLoadingBinding
 
-class LoadingStateAdapter : LoadStateAdapter<LoadingStateAdapter.LoadingItemViewHolder>() {
+class LoadingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<LoadingStateAdapter.LoadingItemViewHolder>() {
     override fun onBindViewHolder(holder: LoadingItemViewHolder, loadState: LoadState) {
         holder.bind(loadState)
     }
@@ -20,18 +20,19 @@ class LoadingStateAdapter : LoadStateAdapter<LoadingStateAdapter.LoadingItemView
         val inflater = LayoutInflater.from(parent.context)
         val binding = LayoutLoadingBinding.inflate(inflater, parent, false)
 
-        return LoadingItemViewHolder(binding)
+        return LoadingItemViewHolder(binding, retry)
     }
 
-    class LoadingItemViewHolder(private val binding: LayoutLoadingBinding) :
+    class LoadingItemViewHolder(private val binding: LayoutLoadingBinding, val retry: () -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(loadState: LoadState) {
+            binding.btnRetry.setOnClickListener { retry() }
             // 로딩 여부에 따라 visibility 처리
             with(binding) {
                 progressBar.isVisible = loadState is LoadState.Loading
-                loadingMessage.isVisible = loadState !is LoadState.Loading
+                textError.isVisible = loadState is LoadState.Error
+                btnRetry.isVisible = loadState is LoadState.Error
             }
-
             binding.executePendingBindings()
         }
     }

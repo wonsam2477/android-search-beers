@@ -2,15 +2,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
 
         <variable
             name="viewModel"
             type="com.eddiej.searchbeers.feature.main.MainViewModel" />
     </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"
@@ -44,8 +46,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:spanCount="2"
             tools:listitem="@layout/beer_list_item" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:gravity="center"
+            android:text="@string/empty_text"
+            android:textColor="@color/charcoal_grey"
+            android:textSize="20sp"
+            tools:visibility="visible"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

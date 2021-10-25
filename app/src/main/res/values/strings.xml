@@ -3,6 +3,7 @@
     <string name="fragment_beer_list">검색</string>
     <string name="fragment_beer_detail">상세정보</string>
 
-    <string name="loading_text">데이터 로딩중입니다</string>
+    <string name="error_text">오류가 발생하였습니다</string>
     <string name="searchview_hint">검색어를 입력하세요</string>
+    <string name="empty_text">검색결과가 없습니다</string>
 </resources>

@@ -1,7 +1,9 @@
 package com.eddiej.searchbeers.feature.main.search
 
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +13,7 @@ import com.eddiej.searchbeers.domain.model.beer.BeerItemEntity
 import com.eddiej.searchbeers.feature.BaseFragment
 import com.eddiej.searchbeers.feature.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class BeerListFragment : BaseFragment<FragmentBeerListBinding>() {
@@ -55,11 +58,18 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>() {
                 // PagingAdapter
                 val adapter = BeerListAdapter(viewModel)
                 // LoadingAdapter
-                val loadingAdapter = LoadingStateAdapter()
+                val loadingAdapter = LoadingStateAdapter {
+                    adapter.retry()
+                }
                 // PagingAdapter 상태 연결
                 adapter.addLoadStateListener { loadStates ->
-                    loadingAdapter.loadState = loadStates.append
+                    loadingAdapter.loadState = loadStates.source.refresh
+
+                    // 검색결과가 없을 때 간단한 텍스트 출력
+                    val isEmpty =  (loadStates.source.refresh is LoadState.NotLoading && adapter.itemCount == 0)
+                    binding?.textEmpty?.isVisible = isEmpty
                 }
+
                 // 어댑터 결합
                 val concatAdapter = ConcatAdapter(adapter, loadingAdapter)
                 recyclerView.adapter = concatAdapter

@@ -22,6 +22,7 @@ class BeerPagingSource(private val beerName: String, private val service: BeerSe
 
         return request
             .map { data -> toResult(data, nextKey) }
+            .onErrorReturn { error -> LoadResult.Error(error) }
     }
 
     private fun toResult(response: List<BeerItem>, nextKey: Int):LoadResult<Int,BeerItemEntity>{
