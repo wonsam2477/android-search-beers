@@ -1,5 +1,6 @@
 package com.eddiej.searchbeers.feature.main.search
 
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.ConcatAdapter
@@ -9,31 +10,38 @@ import com.eddiej.searchbeers.databinding.FragmentBeerListBinding
 import com.eddiej.searchbeers.domain.model.beer.BeerItemEntity
 import com.eddiej.searchbeers.feature.BaseFragment
 import com.eddiej.searchbeers.feature.main.MainViewModel
-import com.jakewharton.rxbinding4.appcompat.queryTextChanges
-import io.reactivex.rxjava3.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BeerListFragment : BaseFragment<FragmentBeerListBinding>() {
+
     private val viewModel by activityViewModels<MainViewModel>()
+
     override fun setupViews() {
-        viewModel.pagingData.observe(this, {entity ->
-            createAdapter(binding?.recyclerView, entity)
-        })
+
     }
 
     override fun bindViews() {
+        viewModel.pagingData.observe(this, { entity ->
+            createAdapter(binding?.recyclerView, entity)
+        })
+
         binding?.let {
             it.viewModel = viewModel
 
-            it.searchView.queryTextChanges()
-                // 입력 후 1초 경과 시 Query 전달
-                .debounce(1000, TimeUnit.MILLISECONDS, Schedulers.io())
-                .map { charSequence -> charSequence.toString() }
-                // 빈 문자열이나 공백은 무시
-                .filter { query -> !query.isNullOrBlank() }
-                .subscribe { query ->
-                    viewModel.getBeers(query)
+            it.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    if (!query.isNullOrEmpty()) {
+                        viewModel.getBeers(query)
+                    }
+
+                    return false
                 }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return false
+                }
+            })
         }
     }
 
@@ -45,7 +53,7 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>() {
                 rv.adapter as BeerListAdapter
             } else {
                 // PagingAdapter
-                val adapter = BeerListAdapter()
+                val adapter = BeerListAdapter(viewModel)
                 // LoadingAdapter
                 val loadingAdapter = LoadingStateAdapter()
                 // PagingAdapter 상태 연결

@@ -2,13 +2,16 @@ package com.eddiej.searchbeers.feature.main.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.eddiej.searchbeers.R
 import com.eddiej.searchbeers.databinding.BeerListItemBinding
 import com.eddiej.searchbeers.domain.model.beer.BeerItemEntity
+import com.eddiej.searchbeers.feature.main.MainViewModel
 
-class BeerListAdapter :
+class BeerListAdapter(private val viewModel: MainViewModel) :
     PagingDataAdapter<BeerItemEntity, BeerListAdapter.BeerItemViewHolder>(BeerItemDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeerItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -20,13 +23,17 @@ class BeerListAdapter :
     override fun onBindViewHolder(holder: BeerItemViewHolder, position: Int) {
         val item = getItem(position)
         item?.let {
-            holder.bind(it)
+            holder.bind(viewModel, it)
         }
     }
 
     class BeerItemViewHolder constructor(private val binding: BeerListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: BeerItemEntity) {
+        fun bind(viewModel: MainViewModel, item: BeerItemEntity) {
+            binding.setClickListener {
+                viewModel.selectItem(item)
+                it.findNavController().navigate(R.id.action_beerListFragment_to_beerDetailFragment)
+            }
             binding.item = item
             binding.executePendingBindings()
         }

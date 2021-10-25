@@ -19,6 +19,10 @@ class MainViewModel @Inject constructor(private val beerUseCase: GetBeerUseCase)
     val pagingData: LiveData<PagingData<BeerItemEntity>>
         get() = _pagingData
 
+    private val _selectedItem = MutableLiveData<BeerItemEntity>()
+    val selectedItem: LiveData<BeerItemEntity>
+        get() = _selectedItem
+
     fun getBeers(beerName: String) {
         val responseStream = beerUseCase
             .get(beerName)
@@ -30,5 +34,9 @@ class MainViewModel @Inject constructor(private val beerUseCase: GetBeerUseCase)
             .subscribe {
                 _pagingData.value = it
             }
+    }
+
+    fun selectItem(item: BeerItemEntity) {
+        _selectedItem.value = item
     }
 }

@@ -11,14 +11,14 @@
         android:label="@string/fragment_beer_list">
         <action
             android:id="@+id/action_beerListFragment_to_beerDetailFragment"
-            app:destination="@id/beerDetailFragment" />
+            app:destination="@id/beerDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/beerDetailFragment"
         android:name="com.eddiej.searchbeers.feature.main.detail.BeerDetailFragment"
-        android:label="@string/fragment_beer_detail">
-        <action
-            android:id="@+id/action_beerDetailFragment_to_beerListFragment"
-            app:destination="@id/beerListFragment" />
-    </fragment>
+        android:label="@string/fragment_beer_detail"/>
 </navigation>

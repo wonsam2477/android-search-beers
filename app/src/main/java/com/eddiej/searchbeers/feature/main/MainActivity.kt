@@ -2,6 +2,7 @@ package com.eddiej.searchbeers.feature.main
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.eddiej.searchbeers.R
@@ -21,4 +22,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun getLayoutResourceId(): Int = R.layout.activity_main
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.container)
+
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
 }

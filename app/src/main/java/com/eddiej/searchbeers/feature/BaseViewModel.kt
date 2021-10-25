@@ -6,9 +6,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 
 abstract class BaseViewModel : ViewModel() {
-    companion object {
-        val TAG: String = this::class.java.simpleName
-    }
+    val TAG: String = javaClass.simpleName
 
     private val _compositeDisposable = CompositeDisposable()
 

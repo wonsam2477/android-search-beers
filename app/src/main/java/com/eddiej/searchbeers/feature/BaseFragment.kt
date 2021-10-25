@@ -13,18 +13,16 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 
 abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
-    companion object {
-        val TAG: String = this::class.java.simpleName
-    }
+    val TAG: String = javaClass.simpleName
 
     protected var binding: B? = null
 
     private val _compositeDisposable = CompositeDisposable()
 
-    // 초기화 진행 로직 (Subscribe, Observe, Adapter 초기화 등)
+    // 초기화 진행 로직
     abstract fun setupViews()
 
-    // 뷰의 갱신이 필요한 로직 (View update, data reload 등)
+    // 뷰의 갱신이 필요한 로직
     abstract fun bindViews()
 
     @LayoutRes

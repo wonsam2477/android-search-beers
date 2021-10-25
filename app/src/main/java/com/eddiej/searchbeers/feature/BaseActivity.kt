@@ -7,14 +7,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity() {
-    companion object {
-        val TAG: String = this::class.java.simpleName
-    }
+    val TAG: String = javaClass.simpleName
 
     @LayoutRes
     abstract fun getLayoutResourceId(): Int
 
-    protected var binding : B? = null
+    protected var binding: B? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
