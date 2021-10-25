@@ -1,5 +1,6 @@
 package com.eddiej.searchbeers.feature
 
+import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -13,7 +14,15 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity() {
     @LayoutRes
     abstract fun getLayoutResourceId(): Int
 
-    protected val binding by lazy {
-        DataBindingUtil.setContentView(this, getLayoutResourceId()) as B
+    protected var binding : B? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, getLayoutResourceId()) as B
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 }

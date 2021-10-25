@@ -8,6 +8,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 
@@ -16,7 +17,7 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
         val TAG: String = this::class.java.simpleName
     }
 
-    protected lateinit var binding: B
+    protected var binding: B? = null
 
     private val _compositeDisposable = CompositeDisposable()
 
@@ -40,13 +41,14 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, getLayoutResourceId(), container, false)
-        binding.lifecycleOwner = activity
+        binding?.lifecycleOwner = viewLifecycleOwner
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onDestroyView() {
         _compositeDisposable.dispose()
+        binding = null
         super.onDestroyView()
     }
 
