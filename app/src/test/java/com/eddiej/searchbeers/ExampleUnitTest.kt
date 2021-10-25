@@ -1,4 +1,4 @@
-package com.eddiej.estfamilytest
+package com.eddiej.searchbeers
 
 import org.junit.Test
 
