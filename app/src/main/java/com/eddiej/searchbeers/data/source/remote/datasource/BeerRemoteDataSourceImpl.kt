@@ -8,8 +8,10 @@ import com.eddiej.searchbeers.data.source.remote.service.BeerService
 import com.eddiej.searchbeers.domain.model.beer.BeerItemEntity
 import com.eddiej.searchbeers.feature.main.search.BeerPagingSource
 import io.reactivex.rxjava3.core.Observable
+import javax.inject.Inject
 
-class BeerRemoteDataSourceImpl(private val service: BeerService) : BeerRemoteDataSource {
+class BeerRemoteDataSourceImpl @Inject constructor(private val service: BeerService) :
+    BeerRemoteDataSource {
     override fun getBeers(beerName: String): Observable<PagingData<BeerItemEntity>> {
         return Pager(
             config = PagingConfig(
