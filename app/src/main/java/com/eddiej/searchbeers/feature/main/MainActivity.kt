@@ -2,6 +2,8 @@ package com.eddiej.searchbeers.feature.main
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.eddiej.searchbeers.R
 import com.eddiej.searchbeers.databinding.ActivityMainBinding
 import com.eddiej.searchbeers.feature.BaseActivity
@@ -14,6 +16,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val frag = supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment
+        setupActionBarWithNavController(frag.navController)
     }
 
     override fun getLayoutResourceId(): Int = R.layout.activity_main

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SearchBeers</string>
+    <string name="fragment_beer_list">검색</string>
+    <string name="fragment_beer_detail">상세정보</string>
+
+    <string name="loading_text">데이터 로딩중입니다</string>
+    <string name="searchview_hint">검색어를 입력하세요</string>
 </resources>

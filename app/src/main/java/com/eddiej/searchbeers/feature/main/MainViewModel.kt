@@ -9,6 +9,8 @@ import com.eddiej.searchbeers.domain.model.beer.BeerItemEntity
 import com.eddiej.searchbeers.domain.usecase.GetBeerUseCase
 import com.eddiej.searchbeers.feature.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,6 +25,8 @@ class MainViewModel @Inject constructor(private val beerUseCase: GetBeerUseCase)
             .cachedIn(viewModelScope)
 
         responseStream
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 _pagingData.value = it
             }

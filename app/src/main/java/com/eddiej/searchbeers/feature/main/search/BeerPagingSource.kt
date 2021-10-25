@@ -30,7 +30,7 @@ class BeerPagingSource(private val beerName: String, private val service: BeerSe
         return LoadResult.Page(
             data = data,
             prevKey = null,
-            nextKey = nextKey.plus(1)
+            nextKey = if (data.isEmpty()) null else nextKey.plus(1)
         )
     }
 }

@@ -18,7 +18,7 @@ data class BeerItem(
     @SerializedName("description")
     val description: String = "",
     @SerializedName("ebc")
-    val ebc: Int = 0,
+    val ebc: Float = 0.0f,
     @SerializedName("first_brewed")
     val firstBrewed: String = "",
     @SerializedName("food_pairing")
@@ -28,7 +28,7 @@ data class BeerItem(
     @SerializedName("id")
     val id: Int = 0,
     @SerializedName("image_url")
-    val imageUrl: String = "",
+    val imageUrl: String? = "",
     @SerializedName("ingredients")
     val ingredients: Ingredients = Ingredients(),
     @SerializedName("method")
@@ -42,9 +42,9 @@ data class BeerItem(
     @SerializedName("tagline")
     val tagline: String = "",
     @SerializedName("target_fg")
-    val targetFg: Int = 0,
+    val targetFg: Float = 0.0f,
     @SerializedName("target_og")
-    val targetOg: Int = 0,
+    val targetOg: Float = 0.0f,
     @SerializedName("volume")
     val volume: ValueUnit = ValueUnit()
 ) : IMapper<BeerItemEntity> {
@@ -53,7 +53,7 @@ data class BeerItem(
             id = id,
             name = name,
             tagline = tagline,
-            imageUrl = imageUrl,
+            imageUrl = imageUrl ?: "",
             description = description
         )
     }
