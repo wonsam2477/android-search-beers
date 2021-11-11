@@ -20,9 +20,6 @@
 ### Rx
 - RxJava3, RxAndroid3, RxBinding4
 
-### Image Loader
-- Picasso
-
 ### UI Components
 - Paging3, Navigation
 
