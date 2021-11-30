@@ -8,7 +8,8 @@
     <fragment
         android:id="@+id/beerListFragment"
         android:name="com.eddiej.searchbeers.feature.main.search.BeerListFragment"
-        android:label="@string/fragment_beer_list">
+        android:label="@string/fragment_beer_list"
+        tools:layout="@layout/fragment_beer_list">
         <action
             android:id="@+id/action_beerListFragment_to_beerDetailFragment"
             app:destination="@id/beerDetailFragment"
@@ -20,5 +21,6 @@
     <fragment
         android:id="@+id/beerDetailFragment"
         android:name="com.eddiej.searchbeers.feature.main.detail.BeerDetailFragment"
-        android:label="@string/fragment_beer_detail"/>
+        android:label="@string/fragment_beer_detail"
+        tools:layout="@layout/fragment_beer_detail" />
 </navigation>
